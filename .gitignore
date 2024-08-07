@@ -1,0 +1,12 @@
+# Ignore node_modules in the frontend
+/frontend/node_modules
+/frontend/build
+
+# Ignore .idea files and directories (from JetBrains IDEs like IntelliJ)
+.idea/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+api_requirements.odt
