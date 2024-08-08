@@ -17,7 +17,7 @@ CREATE TABLE employees (
     email VARCHAR(100) NOT NULL UNIQUE,
     department VARCHAR(50),
     role VARCHAR (50),
-    dateOfHire TIMESTAMP,
+    date_of_hire TIMESTAMP,
     salary DOUBLE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
