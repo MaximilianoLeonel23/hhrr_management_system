@@ -6,13 +6,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record ProjectResponseDTO(
+public record ProjectDetailsResponseDTO(
         Long id,
         String name,
         String description,
         LocalDate startDate,
         LocalDate endDate,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        LocalDateTime updatedAt,
+        List<EmployeeResponseDTO> employees
 ) {
 }
