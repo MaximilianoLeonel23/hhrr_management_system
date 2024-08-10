@@ -3,9 +3,11 @@ package com.maximiliano.backend.service;
 import com.maximiliano.backend.dto.times.TimeRecordDetailsResponseDTO;
 import com.maximiliano.backend.dto.times.TimeRecordRequestDTO;
 import com.maximiliano.backend.dto.times.TimeRecordResponseDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TimeRecordService {
     public List<TimeRecordResponseDTO> getAllTimeRecords() {
         return null;

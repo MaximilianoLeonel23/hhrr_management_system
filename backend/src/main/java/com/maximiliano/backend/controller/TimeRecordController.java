@@ -26,7 +26,7 @@ public class TimeRecordController {
         return ResponseEntity.ok(timeRecords);
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<TimeRecordDetailsResponseDTO> getTimeRecordByID(
             @PathVariable Long id
     ) {

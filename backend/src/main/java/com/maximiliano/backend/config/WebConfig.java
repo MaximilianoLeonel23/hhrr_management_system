@@ -13,6 +13,6 @@ public class WebConfig implements WebMvcConfigurer {
     private String apiPrefix;
 
     public void configurePathMatch(PathMatchConfigurer pathMatchConfigurer) {
-        pathMatchConfigurer.addPathPrefix(apiPrefix, c -> c.isAnnotationPresent(RestController.class))
+        pathMatchConfigurer.addPathPrefix(apiPrefix, c -> c.isAnnotationPresent(RestController.class));
     }
 }

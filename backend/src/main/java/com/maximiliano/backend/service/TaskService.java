@@ -4,9 +4,11 @@ import com.maximiliano.backend.dto.task.TaskDetailsResponseDTO;
 import com.maximiliano.backend.dto.task.TaskRequestDTO;
 import com.maximiliano.backend.dto.task.TaskResponseDTO;
 import com.maximiliano.backend.dto.task.TaskUpdateRequestDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TaskService {
 
 
