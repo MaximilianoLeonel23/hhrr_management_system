@@ -7,6 +7,7 @@ import com.maximiliano.backend.dto.times.TimeRecordResponseDTO;
 import com.maximiliano.backend.service.TimeRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -20,12 +21,14 @@ public class TimeRecordController {
     @Autowired
     private TimeRecordService timeRecordService;
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     @GetMapping
     public ResponseEntity<List<TimeRecordResponseDTO>> getAllTimeRecords() {
         List<TimeRecordResponseDTO> timeRecords = timeRecordService.getAllTimeRecords();
         return ResponseEntity.ok(timeRecords);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or (hasRole('MANAGER') or (hasRole('EMPLOYEE') and #id == principal.id))")
     @GetMapping("/{id}")
     public ResponseEntity<TimeRecordDetailsResponseDTO> getTimeRecordByID(
             @PathVariable Long id
@@ -34,6 +37,7 @@ public class TimeRecordController {
         return ResponseEntity.ok(timeRecord);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     @PostMapping
     public ResponseEntity<TimeRecordResponseDTO> createNewTimeRecord(
             @RequestBody TimeRecordRequestDTO timeRecordRequestDTO

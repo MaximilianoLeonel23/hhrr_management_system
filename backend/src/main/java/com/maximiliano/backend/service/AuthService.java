@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
 
@@ -45,20 +47,21 @@ public class AuthService {
     }
 
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
-        User userFound = authRepository.findByUsername(loginRequestDTO.username());
+        Optional<User> userFound = authRepository.findByUsername(loginRequestDTO.username());
 
-        if (userFound != null) {
-            if (encoder.matches(loginRequestDTO.password(), userFound.getPassword())) {
-                String token = tokenService.generatedToken(userFound.getUsername());
-                UserResponseDTO user = new UserResponseDTO(
-                        userFound.getId(),
-                        userFound.getUsername(),
-                        userFound.getEmail(),
-                        userFound.getRole(),
-                        userFound.getCreatedAt(),
-                        userFound.getUpdatedAt()
+        if (userFound.isPresent()) {
+            User user = userFound.get();
+            if (encoder.matches(loginRequestDTO.password(), user.getPassword())) {
+                String token = tokenService.generatedToken(user.getUsername());
+                UserResponseDTO userDTO = new UserResponseDTO(
+                        user.getId(),
+                        user.getUsername(),
+                        user.getEmail(),
+                        user.getRole(),
+                        user.getCreatedAt(),
+                        user.getUpdatedAt()
                 );
-                return new LoginResponseDTO(token, user);
+                return new LoginResponseDTO(token, userDTO);
             } else {
                 throw new RuntimeException("Invalid credentials");
             }

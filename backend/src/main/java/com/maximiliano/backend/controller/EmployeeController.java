@@ -8,6 +8,8 @@ import com.maximiliano.backend.model.Employee;
 import com.maximiliano.backend.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,18 +23,21 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @PreAuthorize("hasRole('ADMIN') or (hasRole('MANAGER'))")
     @GetMapping
     public ResponseEntity<List<EmployeeResponseDTO>> getAllEmployees() {
         List<EmployeeResponseDTO> employees = employeeService.getAllEmployees();
         return ResponseEntity.ok(employees);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or (hasRole('MANAGER')) or ((hasRole('EMPLOYEE') and #id == principal.id))")
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDetailsResponseDTO> getEmployeeByID(@PathVariable Long id) {
         EmployeeDetailsResponseDTO employee = employeeService.getEmployeeByID(id);
         return ResponseEntity.ok(employee);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<EmployeeResponseDTO> createNewEmployee(
             @RequestBody EmployeeRequestDTO employeeRequestDTO
@@ -42,6 +47,7 @@ public class EmployeeController {
         return ResponseEntity.created(uri).body(employee);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeResponseDTO> updateEmployee(
             @PathVariable Long id,
@@ -51,6 +57,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployee(
             @PathVariable Long id
