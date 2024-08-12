@@ -49,7 +49,7 @@ public class AuthService {
 
         if (userFound != null) {
             if (encoder.matches(loginRequestDTO.password(), userFound.getPassword())) {
-                String token = tokenService.generatedToke(userFound.getUsername());
+                String token = tokenService.generatedToken(userFound.getUsername());
                 UserResponseDTO user = new UserResponseDTO(
                         userFound.getId(),
                         userFound.getUsername(),

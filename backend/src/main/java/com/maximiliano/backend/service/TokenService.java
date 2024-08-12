@@ -15,7 +15,7 @@ public class TokenService {
     @Value("123")
     private String apiSecret;
 
-    public String generatedToke(String username) {
+    public String generatedToken(String username) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             return JWT.create()
