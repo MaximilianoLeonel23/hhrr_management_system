@@ -5,6 +5,7 @@ import com.maximiliano.backend.dto.auth.LoginResponseDTO;
 import com.maximiliano.backend.dto.user.UserRequestDTO;
 import com.maximiliano.backend.dto.user.UserResponseDTO;
 import com.maximiliano.backend.service.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> registerNewUser(
-            @RequestBody UserRequestDTO userRequestDTO
+           @Valid @RequestBody UserRequestDTO userRequestDTO
     ) {
         UserResponseDTO newUser = authService.registerNewUser(userRequestDTO);
         return ResponseEntity.ok(newUser);
@@ -28,7 +29,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(
-            @RequestBody LoginRequestDTO loginRequestDTO
+            @Valid @RequestBody LoginRequestDTO loginRequestDTO
     ) {
         LoginResponseDTO login = authService.login(loginRequestDTO);
         return ResponseEntity.ok(login);

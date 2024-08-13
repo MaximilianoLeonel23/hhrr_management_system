@@ -1,5 +1,9 @@
 package com.maximiliano.backend.exception;
 
+import com.maximiliano.backend.exception.auth.DuplicateUserEmailException;
+import com.maximiliano.backend.exception.auth.DuplicateUserUsernameException;
+import com.maximiliano.backend.exception.auth.InvalidCredentialsException;
+import com.maximiliano.backend.exception.auth.UserNotFoundException;
 import com.maximiliano.backend.exception.employee.DuplicateEmployeeEmailException;
 import com.maximiliano.backend.exception.employee.EmployeeNotFoundException;
 import com.maximiliano.backend.exception.employee.NoEmployeesFoundException;
@@ -83,5 +87,36 @@ public class GlobalExceptionHandler {
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    // AUTHENTICATION
+
+    @ExceptionHandler(DuplicateUserEmailException.class)
+    public ResponseEntity<Map<String, String>> handleDuplicateUserEmailException(DuplicateUserEmailException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+
+    @ExceptionHandler(DuplicateUserUsernameException.class)
+    public ResponseEntity<Map<String, String>> handleDuplicateUserUsernameException(DuplicateUserUsernameException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleUserNotFoundException(UserNotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidCredentialsException(InvalidCredentialsException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 }

@@ -4,6 +4,10 @@ import com.maximiliano.backend.dto.auth.LoginRequestDTO;
 import com.maximiliano.backend.dto.auth.LoginResponseDTO;
 import com.maximiliano.backend.dto.user.UserRequestDTO;
 import com.maximiliano.backend.dto.user.UserResponseDTO;
+import com.maximiliano.backend.exception.auth.DuplicateUserEmailException;
+import com.maximiliano.backend.exception.auth.DuplicateUserUsernameException;
+import com.maximiliano.backend.exception.auth.InvalidCredentialsException;
+import com.maximiliano.backend.exception.auth.UserNotFoundException;
 import com.maximiliano.backend.model.Role;
 import com.maximiliano.backend.model.User;
 import com.maximiliano.backend.repository.AuthRepository;
@@ -28,6 +32,15 @@ public class AuthService {
     public UserResponseDTO registerNewUser(UserRequestDTO userRequestDTO) {
         String passwordEncoded = encoder.encode(userRequestDTO.password());
         Role role = userRequestDTO.role().orElse(Role.EMPLOYEE);
+
+        if (authRepository.existsByEmail(userRequestDTO.email())) {
+            throw new DuplicateUserEmailException("Email " + userRequestDTO.email() + " is already in use.");
+        }
+
+        if (authRepository.existsByUsername(userRequestDTO.username())) {
+            throw new DuplicateUserUsernameException("Username " + userRequestDTO.username() + " is already in use.");
+        }
+
         User createdUser = new User(
                 userRequestDTO.username(),
                 passwordEncoded,
@@ -63,10 +76,10 @@ public class AuthService {
                 );
                 return new LoginResponseDTO(token, userDTO);
             } else {
-                throw new RuntimeException("Invalid credentials");
+                throw new InvalidCredentialsException("Invalid credentials.");
             }
         } else {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User not found.");
         }
     }
 }
