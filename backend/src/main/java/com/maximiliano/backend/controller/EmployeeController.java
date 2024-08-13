@@ -4,11 +4,10 @@ import com.maximiliano.backend.dto.employee.EmployeeDetailsResponseDTO;
 import com.maximiliano.backend.dto.employee.EmployeeRequestDTO;
 import com.maximiliano.backend.dto.employee.EmployeeResponseDTO;
 import com.maximiliano.backend.dto.employee.EmployeeUpdateRequestDTO;
-import com.maximiliano.backend.model.Employee;
 import com.maximiliano.backend.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -40,10 +39,10 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<EmployeeResponseDTO> createNewEmployee(
-            @RequestBody EmployeeRequestDTO employeeRequestDTO
+            @Valid @RequestBody EmployeeRequestDTO employeeRequestDTO
     ) {
         EmployeeResponseDTO employee = employeeService.createNewEmployee(employeeRequestDTO);
-        URI uri = UriComponentsBuilder.fromPath("/api/employees/{id}").buildAndExpand("1").toUri();
+        URI uri = UriComponentsBuilder.fromPath("/api/employees/{id}").buildAndExpand(employee.id()).toUri();
         return ResponseEntity.created(uri).body(employee);
     }
 
@@ -51,7 +50,7 @@ public class EmployeeController {
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeResponseDTO> updateEmployee(
             @PathVariable Long id,
-            @RequestBody EmployeeUpdateRequestDTO employeeUpdateRequestDTO
+            @Valid @RequestBody EmployeeUpdateRequestDTO employeeUpdateRequestDTO
     ) {
         EmployeeResponseDTO employee = employeeService.updateEmployee(id, employeeUpdateRequestDTO);
         return ResponseEntity.ok(employee);

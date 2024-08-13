@@ -1,5 +1,7 @@
 package com.maximiliano.backend.model;
 
+import com.maximiliano.backend.dto.employee.EmployeeRequestDTO;
+import com.maximiliano.backend.dto.employee.EmployeeUpdateRequestDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -27,7 +29,7 @@ public class Employee {
     @Column(name = "lastname", nullable = false)
     private String lastName;
     @Column(unique = true, nullable = false)
-    @Email
+    @Email(message = "Invalid email format.")
     private String email;
     private String department;
     private String role;
@@ -47,4 +49,26 @@ public class Employee {
     )
     private List<Project> projects = new ArrayList<>();
 
+    public Employee(EmployeeRequestDTO employeeRequestDTO) {
+        this.firstName = employeeRequestDTO.firstname();
+        this.lastName = employeeRequestDTO.lastname();
+        this.email = employeeRequestDTO.email();
+        this.department = employeeRequestDTO.department().orElse(null);
+        this.role = employeeRequestDTO.role().orElse(null);
+        this.dateOfHire = employeeRequestDTO.dateOfHire().orElse(LocalDate.now());
+        this.salary = employeeRequestDTO.salary().orElse(0.0);
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void update(EmployeeUpdateRequestDTO employee) {
+        employee.firstname().ifPresent(firstname -> this.firstName = firstname);
+        employee.lastname().ifPresent(lastname -> this.lastName = lastname);
+        employee.email().ifPresent(email -> this.email = email);
+        employee.department().ifPresent(department -> this.department = department);
+        employee.role().ifPresent(role -> this.role = role);
+        employee.dateOfHired().ifPresent(dateOfHire -> this.dateOfHire = dateOfHire);
+        employee.salary().ifPresent(salary -> this.salary = salary);
+        this.updatedAt = LocalDateTime.now();
+    }
 }
