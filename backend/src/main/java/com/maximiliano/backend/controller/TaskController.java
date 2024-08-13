@@ -6,6 +6,7 @@ import com.maximiliano.backend.dto.task.TaskResponseDTO;
 import com.maximiliano.backend.dto.task.TaskUpdateRequestDTO;
 import com.maximiliano.backend.service.TaskSecurityService;
 import com.maximiliano.backend.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,7 +42,7 @@ public class TaskController {
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     @PostMapping
-    public ResponseEntity<TaskResponseDTO> createNewTask(@RequestBody TaskRequestDTO taskRequestDTO) {
+    public ResponseEntity<TaskResponseDTO> createNewTask(@Valid @RequestBody TaskRequestDTO taskRequestDTO) {
         TaskResponseDTO task = taskService.createNewTask(taskRequestDTO);
         URI uri = UriComponentsBuilder.fromPath("/api/tasks/{id}").buildAndExpand(task.id()).toUri();
         return ResponseEntity.created(uri).body(task);
@@ -51,7 +52,7 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<TaskResponseDTO> updateTask(
             @PathVariable Long id,
-            @RequestBody TaskUpdateRequestDTO taskUpdateRequestDTO
+            @Valid @RequestBody TaskUpdateRequestDTO taskUpdateRequestDTO
     ) {
         TaskResponseDTO task = taskService.updateTask(id, taskUpdateRequestDTO);
         return ResponseEntity.ok(task);
