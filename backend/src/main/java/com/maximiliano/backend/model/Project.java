@@ -1,5 +1,7 @@
 package com.maximiliano.backend.model;
 
+import com.maximiliano.backend.dto.project.ProjectRequestDTO;
+import com.maximiliano.backend.dto.project.ProjectUpdateRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,4 +36,20 @@ public class Project {
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public Project(ProjectRequestDTO project) {
+        this.name = project.name();
+        this.description = project.description().orElse(null);
+        this.startDate = project.startDate();
+        this.endDate = project.endDate().orElse(null);
+    }
+
+
+    public void update(ProjectUpdateRequestDTO project) {
+        project.name().ifPresent(name -> this.name = name);
+        project.description().ifPresent(description -> this.description = description);
+        project.startDate().ifPresent(startDate -> this.startDate = startDate);
+        project.endDate().ifPresent(endDate -> this.endDate = endDate);
+        this.updatedAt = LocalDateTime.now();
+    }
 }

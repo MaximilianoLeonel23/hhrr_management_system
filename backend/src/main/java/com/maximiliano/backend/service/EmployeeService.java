@@ -75,7 +75,7 @@ public class EmployeeService {
                     projects
             );
         } else {
-            throw new EmployeeNotFoundException("Employee ID " + id + " not found.");
+            throw new EmployeeNotFoundException("Employee with ID " + id + " not found.");
         }
     }
 
@@ -120,14 +120,14 @@ public class EmployeeService {
                     employee.getUpdatedAt()
             );
         } else {
-            throw new EmployeeNotFoundException("Employee ID " + id + " not found.");
+            throw new EmployeeNotFoundException("Employee with ID " + id + " not found.");
         }
     }
 
     public void deleteEmployee(Long id) {
         Optional<Employee> employeeFound = employeeRepository.findById(id);
         if (employeeFound.isEmpty()) {
-            throw new EmployeeNotFoundException("Employee ID " + id + " not found.");
+            throw new EmployeeNotFoundException("Employee with ID " + id + " not found.");
         }
         employeeRepository.deleteById(employeeFound.get().getId());
     }
