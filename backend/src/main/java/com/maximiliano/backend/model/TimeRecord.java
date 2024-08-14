@@ -1,11 +1,13 @@
 package com.maximiliano.backend.model;
 
+import com.maximiliano.backend.dto.times.TimeRecordRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -29,4 +31,12 @@ public class TimeRecord {
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public TimeRecord(TimeRecordRequestDTO timeRecord, Employee employee) {
+        this.employee = employee;
+        this.date = timeRecord.date();
+        this.hoursWorked = timeRecord.hoursWorked();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 }

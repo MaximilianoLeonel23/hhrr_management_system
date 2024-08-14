@@ -7,10 +7,14 @@ import com.maximiliano.backend.exception.auth.UserNotFoundException;
 import com.maximiliano.backend.exception.employee.DuplicateEmployeeEmailException;
 import com.maximiliano.backend.exception.employee.EmployeeNotFoundException;
 import com.maximiliano.backend.exception.employee.NoEmployeesFoundException;
+import com.maximiliano.backend.exception.payroll.NoPayrollsFoundException;
+import com.maximiliano.backend.exception.payroll.PayrollNotFoundException;
 import com.maximiliano.backend.exception.project.NoProjectsFoundException;
 import com.maximiliano.backend.exception.project.ProjectNotFoundException;
 import com.maximiliano.backend.exception.task.NoTasksFoundException;
 import com.maximiliano.backend.exception.task.TaskNotFoundException;
+import com.maximiliano.backend.exception.times.NoTimeRecordsFoundException;
+import com.maximiliano.backend.exception.times.TimeRecordNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -119,4 +123,37 @@ public class GlobalExceptionHandler {
         response.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
+
+    // PAYROLL
+
+    @ExceptionHandler(NoPayrollsFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNoPayrollsFoundException(NoPayrollsFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(PayrollNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handlePayrollNotFoundException(PayrollNotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    // TIME RECORD
+
+    @ExceptionHandler(NoTimeRecordsFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNoTimeRecordsFoundException(NoTimeRecordsFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(TimeRecordNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleTimeRecordNotFoundException(TimeRecordNotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
 }

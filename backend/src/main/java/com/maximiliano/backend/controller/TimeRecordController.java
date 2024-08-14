@@ -5,6 +5,7 @@ import com.maximiliano.backend.dto.times.TimeRecordDetailsResponseDTO;
 import com.maximiliano.backend.dto.times.TimeRecordRequestDTO;
 import com.maximiliano.backend.dto.times.TimeRecordResponseDTO;
 import com.maximiliano.backend.service.TimeRecordService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +41,7 @@ public class TimeRecordController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     @PostMapping
     public ResponseEntity<TimeRecordResponseDTO> createNewTimeRecord(
-            @RequestBody TimeRecordRequestDTO timeRecordRequestDTO
+         @Valid @RequestBody TimeRecordRequestDTO timeRecordRequestDTO
     ) {
         TimeRecordResponseDTO timeRecord = timeRecordService.createNewTimeRecord(timeRecordRequestDTO);
         URI uri = UriComponentsBuilder.fromPath("/api/times/{id}").buildAndExpand(timeRecord.id()).toUri();

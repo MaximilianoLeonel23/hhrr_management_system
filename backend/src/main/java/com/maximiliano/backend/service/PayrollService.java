@@ -99,7 +99,7 @@ public class PayrollService {
                     payroll.getUpdatedAt()
             );
         } else {
-            throw new EmployeeNotFoundException("Payroll with employee ID " + payrollRequestDTO.employee() + " not found.");
+            throw new PayrollNotFoundException("Payroll with employee ID " + payrollRequestDTO.employee() + " not found.");
         }
     }
 }
