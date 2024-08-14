@@ -5,6 +5,7 @@ import com.maximiliano.backend.dto.payroll.PayrollRequestDTO;
 import com.maximiliano.backend.dto.payroll.PayrollResponseDTO;
 import com.maximiliano.backend.service.PayrollSecurityService;
 import com.maximiliano.backend.service.PayrollService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,7 +44,7 @@ public class PayrollController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PayrollResponseDTO> createNewPayroll(
-            @RequestBody PayrollRequestDTO payrollRequestDTO
+           @Valid @RequestBody PayrollRequestDTO payrollRequestDTO
     ) {
         PayrollResponseDTO payroll = payrollService.createNewPayroll(payrollRequestDTO);
         URI uri = UriComponentsBuilder.fromPath("/api/payrolls/{id}").buildAndExpand(payroll.id()).toUri();

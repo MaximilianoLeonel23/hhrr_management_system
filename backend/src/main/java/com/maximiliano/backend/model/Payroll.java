@@ -1,5 +1,6 @@
 package com.maximiliano.backend.model;
 
+import com.maximiliano.backend.dto.payroll.PayrollRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -35,4 +36,15 @@ public class Payroll {
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public Payroll(PayrollRequestDTO payroll, Employee employee) {
+        this.employee = employee;
+        this.periodStart = payroll.periodStart();
+        this.periodEnd = payroll.periodEnd().orElse(null);
+        this.grossPay = payroll.grossPay();
+        this.deductions = payroll.deductions();
+        this.netPay = payroll.netPay();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 }
