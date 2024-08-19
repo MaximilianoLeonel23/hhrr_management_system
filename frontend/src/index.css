@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	@apply font-inter;
+}
+
+.sidebar-title {
+	@apply p-2 text-sm text-gray-400 font-semibold;
+}
+
+.sidebar-item {
+	@apply flex gap-4 p-2 text-gray-500 font-medium hover:bg-indigo-50 rounded-lg hover:text-indigo-500 border border-white hover:border-indigo-100 hover:cursor-pointer;
+}
+
+.divider {
+	@apply w-full h-px bg-gray-200;
+}
