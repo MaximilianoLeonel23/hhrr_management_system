@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import axiosInstance from '../utils/axios/axios';
 import PropTypes from 'prop-types';
 
@@ -13,8 +13,8 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
-	const [token, setToken] = useState(null);
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [token, setToken] = useState(localStorage.getItem('token') || null);
+	const [isAuthenticated, setIsAuthenticated] = useState(!!token);
 
 	const login = async data => {
 		try {
@@ -27,6 +27,8 @@ export const AuthProvider = ({ children }) => {
 				setUser(response.data.user);
 				setToken(response.data.token);
 				setIsAuthenticated(true);
+				localStorage.setItem('token', response.data.token);
+				localStorage.setItem('user', JSON.stringify(response.data.user));
 			} else {
 				console.error('Login failed');
 			}
@@ -35,8 +37,28 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
+	const logout = () => {
+		setUser(null);
+		setToken(null);
+		setIsAuthenticated(false);
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
+	};
+
+	useEffect(() => {
+		const token = localStorage.getItem('token');
+		const user = localStorage.getItem('user');
+
+		if (token && user) {
+			setToken(token);
+			setUser(JSON.parse(user));
+			setIsAuthenticated(true);
+		} else {
+			logout();
+		}
+	}, []);
 	return (
-		<AuthContext.Provider value={{ login, user, token, isAuthenticated }}>
+		<AuthContext.Provider value={{ login, user, token, isAuthenticated, logout }}>
 			{children}
 		</AuthContext.Provider>
 	);

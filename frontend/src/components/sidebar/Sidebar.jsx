@@ -7,12 +7,15 @@ import {
 	settingIcon,
 	taskIcon,
 } from '../../assets/icons/icons';
+import Logo from './Logo';
 
 function Sidebar() {
 	return (
-		<aside className='w-1/5 bg-white p-4 flex flex-col justify-between border border-gray-200'>
+		<aside className='w-1/5 bg-white p-4 flex flex-col justify-between border-r border-gray-200'>
 			<div>
-				<h4>APPLICATION LOGO</h4>
+				<div className='flex items-center gap-2 py-2'>
+					<Logo />
+				</div>
 				<div className='divider'></div>
 				<div className='py-2'>
 					<h4 className='sidebar-title'>MAIN MENU</h4>
@@ -44,15 +47,15 @@ function Sidebar() {
 					<h4 className='sidebar-title'>DEPARTMENT</h4>
 					<ul>
 						<li className='sidebar-item'>
-							<span>1 </span>
+							<span className='rounded h-2.5 w-2.5 bg-red-500'></span>
 							<a href='/'>Bussiness</a>
 						</li>
 						<li className='sidebar-item'>
-							<span>2 </span>
+							<span className='rounded h-2.5 w-2.5 bg-yellow-500'></span>
 							<a href='/'>Design</a>
 						</li>
 						<li className='sidebar-item'>
-							<span>3 </span>
+							<span className='rounded h-2.5 w-2.5 bg-green-500'></span>
 							<a href='/'>Sales</a>
 						</li>
 					</ul>
