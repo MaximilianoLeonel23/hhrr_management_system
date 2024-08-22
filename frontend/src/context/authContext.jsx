@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import axiosInstance from '../utils/axios/axios';
 import PropTypes from 'prop-types';
+import { loginRequest } from '../utils/requests/auth';
 
 export const AuthContext = createContext();
 
@@ -18,10 +18,8 @@ export const AuthProvider = ({ children }) => {
 
 	const login = async data => {
 		try {
-			const response = await axiosInstance.post('/auth/login', {
-				username: data.username,
-				password: data.password,
-			});
+			console.log('Datos login', data);
+			const response = await loginRequest(data);
 			if (response.status === 200) {
 				console.log('Login successful: ', response.data);
 				setUser(response.data.user);

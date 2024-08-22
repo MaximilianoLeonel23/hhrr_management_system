@@ -18,7 +18,7 @@ function MainLayout() {
 			<Sidebar />
 			<div className='flex flex-col w-full'>
 				<Header />
-				<main className='bg-gray-50'>
+				<main className='flex flex-col p-4 bg-gray-50'>
 					<Outlet />
 				</main>
 			</div>
