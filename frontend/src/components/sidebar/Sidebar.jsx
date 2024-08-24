@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	dashboardIcon,
 	employeeIcon,
@@ -8,8 +8,28 @@ import {
 	taskIcon,
 } from '../../assets/icons/icons';
 import Logo from './Logo';
+import { allEmployeesRequest } from '../../utils/requests/employee';
+import { getColorByDepartment } from '../../utils/colorMap';
 
 function Sidebar() {
+	const [employees, setEmployees] = useState([]);
+	const [departments, setDepartments] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const employeesData = await allEmployeesRequest();
+			if (employeesData) {
+				setEmployees(employeesData.data);
+				const departmentSet = new Set();
+				employeesData.data.forEach(employee => {
+					departmentSet.add(employee.department);
+				});
+				setDepartments(Array.from(departmentSet));
+				console.log(departments);
+			}
+		};
+		fetchData();
+	}, []);
 	return (
 		<aside className='w-1/5 bg-white p-4 flex flex-col justify-between border-r border-gray-200'>
 			<div>
@@ -46,18 +66,15 @@ function Sidebar() {
 				<div className='py-2'>
 					<h4 className='sidebar-title'>DEPARTMENT</h4>
 					<ul>
-						<li className='sidebar-item'>
-							<span className='rounded h-2.5 w-2.5 bg-red-500'></span>
-							<a href='/'>Bussiness</a>
-						</li>
-						<li className='sidebar-item'>
-							<span className='rounded h-2.5 w-2.5 bg-yellow-500'></span>
-							<a href='/'>Design</a>
-						</li>
-						<li className='sidebar-item'>
-							<span className='rounded h-2.5 w-2.5 bg-green-500'></span>
-							<a href='/'>Sales</a>
-						</li>
+						{departments.map(d => {
+							const color = getColorByDepartment(d);
+							return (
+								<li key={d} className='sidebar-item'>
+									<span className={`rounded h-2.5 w-2.5 ${color}`}></span>
+									<a href='/'>{d}</a>
+								</li>
+							);
+						})}
 					</ul>
 				</div>
 			</div>

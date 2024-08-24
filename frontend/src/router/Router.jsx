@@ -7,6 +7,9 @@ import Projects from '../components/project/Projects';
 import Payroll from '../components/payroll/Payroll';
 import Setting from '../components/setting/Setting';
 import MainLayout from '../layout/MainLayout';
+import EmployeeLayout from '../layout/EmployeeLayout';
+import { element } from 'prop-types';
+import EmployeeForm from '../components/employee/EmployeeForm';
 
 const router = createBrowserRouter([
 	{
@@ -19,7 +22,17 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/employee',
-				element: <Employee />,
+				element: <EmployeeLayout />,
+				children: [
+					{
+						index: true,
+						element: <Employee />,
+					},
+					{
+						path: '/employee/add',
+						element: <EmployeeForm />,
+					},
+				],
 			},
 			{
 				path: '/project',
