@@ -18,3 +18,9 @@
 .divider {
 	@apply w-full h-px bg-gray-200;
 }
+
+.btn-ghost {
+	@apply bg-transparent py-2 px-4 border border-gray-200 rounded-xl text-gray-400;
+	@apply hover:bg-primery-green hover:cursor-pointer hover:text-white hover:border-primery-green;
+	@apply transition-colors duration-200;
+}

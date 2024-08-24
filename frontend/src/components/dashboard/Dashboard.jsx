@@ -46,18 +46,18 @@ function Dashboard() {
 	}, []);
 
 	return (
-		<>
-			<div className='flex gap-4'>
+		<div className='flex flex-col gap-4'>
+			<div className='flex items-center gap-4'>
 				<div className='bg-white bg-indi rounded p-2.5 shadow-md'>{dashboardIcon()}</div>
 				<Title title='Dashboard' />
 			</div>
 			<div className='flex gap-4'>
-				<DashboardCard title={'Total employees'} number={employees.length} color={'indigo-500'} />
-				<DashboardCard title={'Total projects'} number={projects.length} color={'indigo-500'} />
-				<DashboardCard title={'Total tasks'} number={tasks.length} color={'indigo-500'} />
-				<DashboardCard title={'Total payrolls'} number={payrolls} color={'red-500'} coin />
+				<DashboardCard title={'Total Employees'} number={employees.length} color={'indigo'} />
+				<DashboardCard title={'Total Projects'} number={projects.length} color={'pink'} />
+				<DashboardCard title={'Total Tasks'} number={tasks.length} color={'yellow'} />
+				<DashboardCard title={'Total Payrolls'} number={payrolls} color={'green'} coin />
 			</div>
-		</>
+		</div>
 	);
 }
 
