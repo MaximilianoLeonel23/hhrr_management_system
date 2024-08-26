@@ -13,7 +13,7 @@ function EmployeesTable({ employees }) {
 				<p className='text-gray-500 text-sm font-medium w-1/4 text-left'>Department</p>
 				<p className='text-gray-500 text-sm font-medium w-1/4 text-left'>Role</p>
 			</div>
-			<div className='flex flex-col px-4 bg-white rounded-lg border border-gray-200'>
+			<div className='flex flex-col bg-white rounded-lg border border-gray-200'>
 				{employees &&
 					employees.map((employee, index) => {
 						const color = colors[index % colors.length];

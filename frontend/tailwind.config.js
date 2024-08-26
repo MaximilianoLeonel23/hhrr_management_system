@@ -14,6 +14,7 @@ export default {
 				'primary-green': '#6ECFBD',
 				'primary-lavender': '#8FA1FF',
 				'primary-indigo': '#3843D0',
+				'primary-green-hover': '#3FA693',
 			},
 		},
 	},

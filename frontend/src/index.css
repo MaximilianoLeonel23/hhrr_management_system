@@ -25,7 +25,13 @@ body {
 
 .btn-ghost {
 	@apply bg-transparent py-2 px-4 border border-gray-200 rounded-xl text-gray-400;
-	@apply hover:bg-primary-green hover:cursor-pointer hover:text-white hover:border-primary-green;
+	@apply hover:bg-gray-800 hover:cursor-pointer hover:text-white hover:border-gray-800;
+	@apply transition-colors duration-200;
+}
+
+.btn-primary {
+	@apply bg-primary-green py-2 px-4 border border-primary-green rounded-xl text-gray-100;
+	@apply hover:bg-primary-green-hover hover:cursor-pointer hover:text-white hover:border-primary-green-hover;
 	@apply transition-colors duration-200;
 }
 
@@ -43,4 +49,12 @@ body {
 
 .title-h4 {
 	@apply text-gray-700 text-lg font-medium;
+}
+
+.employee-input {
+	@apply bg-transparent py-2 px-4 border-y border-r border-gray-200 rounded-r-md text-gray-600 outline-0;
+}
+
+.employee-label {
+	@apply bg-transparent py-2 px-4 border border-gray-200 rounded-l-md text-gray-600;
 }

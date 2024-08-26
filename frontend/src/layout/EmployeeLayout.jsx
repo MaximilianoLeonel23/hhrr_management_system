@@ -32,7 +32,7 @@ function EmployeeLayout() {
 		fetchData();
 	}, []);
 	return (
-		<div className='flex flex-col gap-4'>
+		<div className='flex flex-col gap-4 p-4'>
 			<div className='flex items-center gap-4'>
 				<div className='bg-white rounded p-2.5 shadow text-gray-600'>{employeeIcon()}</div>
 				<Title title='Employees' />

@@ -1,12 +1,20 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useOutletContext } from 'react-router-dom';
+import { createNewEmployeeRequest } from '../../utils/requests/employee';
 
 function EmployeeForm() {
 	const { register, handleSubmit } = useForm();
 	const { departmentList } = useOutletContext();
 	const submitHandle = async data => {
-		console.log(data);
+		try {
+			const response = await createNewEmployeeRequest(data);
+			if (response.status == 201) {
+				console.log(response.data);
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -15,7 +23,7 @@ function EmployeeForm() {
 				onSubmit={handleSubmit(submitHandle)}
 				className='flex flex-col gap-2 bg-white px-4 py-8 rounded-xl border border-gray-200'
 			>
-				<h4 className='title-h4'>Register new employee</h4>
+				<h4 className='title-h4  pb-8'>Register new employee</h4>
 				<div className='grid grid-cols-2 gap-8'>
 					<div className='flex flex-col gap-2'>
 						<label className='form-label' htmlFor='firstname'>
@@ -98,7 +106,7 @@ function EmployeeForm() {
 						<input className='form-input' type='number' name='salary' {...register('salary')} />
 					</div>
 				</div>
-				<div className='grid grid-cols-2 gap-8'>
+				<div className='grid grid-cols-2 gap-8 pt-8'>
 					<button className='btn-ghost'>Create</button>
 				</div>
 			</form>

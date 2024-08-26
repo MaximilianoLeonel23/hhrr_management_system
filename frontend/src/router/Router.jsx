@@ -10,6 +10,7 @@ import MainLayout from '../layout/MainLayout';
 import EmployeeLayout from '../layout/EmployeeLayout';
 import { element } from 'prop-types';
 import EmployeeForm from '../components/employee/EmployeeForm';
+import EmployeeDetails from '../components/employee/EmployeeDetails';
 
 const router = createBrowserRouter([
 	{
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
 					{
 						path: '/employee/add',
 						element: <EmployeeForm />,
+					},
+					{
+						path: '/employee/:id',
+						element: <EmployeeDetails />,
 					},
 				],
 			},

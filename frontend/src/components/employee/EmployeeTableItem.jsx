@@ -1,12 +1,18 @@
 import React from 'react';
 import { colorMap, getColorByDepartment } from '../../utils/colorMap';
+import { useNavigate } from 'react-router-dom';
 
 const EmployeeTableItem = ({ employee, color }) => {
-	const { firstname, lastname, department, email, role } = employee;
+	const { firstname, lastname, department, email, role, id } = employee;
 	const bgColor = colorMap[color] || 'bg-gray-500';
 	const departmentColor = getColorByDepartment(department);
+
+	const navigate = useNavigate();
 	return (
-		<div className='flex items-center border-b border-gray-200 p-4'>
+		<div
+			onClick={() => navigate(`/employee/${id}`)}
+			className='flex items-center p-4 hover:bg-gray-100 hover:cursor-pointer'
+		>
 			<div className='w-1/2 flex justify-start items-center gap-2'>
 				<div className={`h-8 w-8 ${bgColor} rounded-full`}></div>
 				<div>
